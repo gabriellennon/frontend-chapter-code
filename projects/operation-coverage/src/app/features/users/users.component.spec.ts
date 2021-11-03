@@ -31,4 +31,35 @@ describe('UsersComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('#ngOnInit', () => {
+    it('should fetch uers', () => {
+      // Given
+      mockUserService.fetchUsers.and.returnValue(
+        of([
+          {
+            id: 1,
+            email: 'george.bluth@reqres.in',
+            firstName: 'George',
+            lastName: 'Bluth',
+            avatarUrl: 'https://reqres.in/img/faces/1-image.jpg',
+          },
+        ])
+      );
+
+      // When
+      component.ngOnInit();
+
+      // Then
+      expect(component.users).toEqual([
+        {
+          id: 1,
+          email: 'george.bluth@reqres.in',
+          firstName: 'George',
+          lastName: 'Bluth',
+          avatarUrl: 'https://reqres.in/img/faces/1-image.jpg',
+        },
+      ]);
+    });
+  });
 });

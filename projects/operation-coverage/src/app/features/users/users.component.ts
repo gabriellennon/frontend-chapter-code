@@ -9,14 +9,12 @@ import { User } from 'src/app/shared/models/user.model';
 })
 export class UsersComponent implements OnInit {
   users?: User[];
-  isLoading: boolean = false;
+  isLoading: boolean = true;
   error: any;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.isLoading = true;
-
     this.userService.fetchUsers().subscribe({
       next: (users) => {
         this.users = users;
