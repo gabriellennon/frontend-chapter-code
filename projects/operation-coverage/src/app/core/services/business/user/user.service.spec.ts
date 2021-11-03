@@ -114,7 +114,9 @@ describe('UserService', () => {
       service.fetchUsers();
 
       // Then
-      expect(mockHttpClient.get).toHaveBeenCalled();
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        'https://reqres.in/api/users?per_page=10'
+      );
     });
   });
 });
