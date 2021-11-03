@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { User } from 'src/app/shared/models/user.model';
 
 import { UserService } from './user.service';
 
@@ -23,7 +24,7 @@ describe('UserService', () => {
   });
 
   describe('#fetchUsers', () => {
-    it('should send get request with http client', () => {
+    beforeEach(() => {
       // Given
       mockHttpClient.get.and.returnValue(
         of({
@@ -109,7 +110,9 @@ describe('UserService', () => {
           },
         })
       );
+    });
 
+    it('should send get request with http client', () => {
       // When
       service.fetchUsers();
 
@@ -117,6 +120,23 @@ describe('UserService', () => {
       expect(mockHttpClient.get).toHaveBeenCalledWith(
         'https://reqres.in/api/users?per_page=10'
       );
+    });
+
+    it('should return a list of users', () => {
+      // When
+      service.fetchUsers().subscribe((val: any) => {
+        expect(val).toEqual(
+          jasmine.arrayContaining<User>([
+            {
+              id: 1,
+              email: 'george.bluth@reqres.in',
+              firstName: 'George',
+              lastName: 'Bluth',
+              avatarUrl: 'https://reqres.in/img/faces/1-image.jpg',
+            },
+          ])
+        );
+      });
     });
   });
 });
