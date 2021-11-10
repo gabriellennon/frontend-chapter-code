@@ -33,7 +33,7 @@ describe('UsersComponent', () => {
   });
 
   describe('#ngOnInit', () => {
-    it('should fetch uers', () => {
+    it('should update users when user service returns users', () => {
       // Given
       mockUserService.fetchUsers.and.returnValue(
         of([
