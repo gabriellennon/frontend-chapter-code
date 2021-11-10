@@ -8,6 +8,7 @@ describe('UsersComponent', () => {
   let component: UsersComponent;
   let fixture: ComponentFixture<UsersComponent>;
   let mockUserService: jasmine.SpyObj<UserService>;
+  let template: HTMLElement;
 
   beforeEach(async () => {
     mockUserService = jasmine.createSpyObj('mockUserService', ['fetchUsers']);
@@ -25,6 +26,7 @@ describe('UsersComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;
+    template = fixture.nativeElement;
     fixture.detectChanges();
   });
 
@@ -79,6 +81,18 @@ describe('UsersComponent', () => {
 
       // Then
       expect(component.error).toEqual('fake error');
+    });
+  });
+
+  describe('ui tests', () => {
+    it('should display loading element when loading', () => {
+      // When
+      component.isLoading = true;
+      fixture.detectChanges();
+
+      // Then
+      const loadingEl = template.querySelector('[data-test="loading-el"]');
+      expect(loadingEl).toBeTruthy();
     });
   });
 });
