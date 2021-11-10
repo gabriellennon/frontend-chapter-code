@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material/card';
 import { of, throwError } from 'rxjs';
 import { UserService } from 'src/app/core/services/business/user/user.service';
+import { User } from 'src/app/shared/models/user.model';
 
 import { UsersComponent } from './users.component';
 
@@ -15,6 +17,7 @@ describe('UsersComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [UsersComponent],
+      imports: [MatCardModule],
       providers: [{ provide: UserService, useValue: mockUserService }],
     }).compileComponents();
   });
@@ -103,6 +106,53 @@ describe('UsersComponent', () => {
       // Then
       const loadingEl = template.querySelector('[data-test="loading-el"]');
       expect(loadingEl).not.toBeTruthy();
+    });
+
+    it('should display error element when there is an error', () => {
+      // When
+      component.error = true;
+      fixture.detectChanges();
+
+      // Then
+      const errorEl = template.querySelector('[data-test="error-el"]');
+      expect(errorEl).toBeTruthy();
+    });
+
+    it('should NOT display error element when there is no error', () => {
+      // When
+      component.error = undefined;
+      fixture.detectChanges();
+
+      // Then
+      const errorEl = template.querySelector('[data-test="error-el"]');
+      expect(errorEl).not.toBeTruthy();
+    });
+
+    it('should display an element for each user', () => {
+      // When
+      component.users = [
+        {
+          id: 1,
+          email: 'george.bluth@reqres.in',
+          firstName: 'George',
+          lastName: 'Bluth',
+          avatarUrl: 'https://reqres.in/img/faces/1-image.jpg',
+        },
+        {
+          id: 2,
+          email: 'janet.weaver@reqres.in',
+          firstName: 'Janet',
+          lastName: 'Weaver',
+          avatarUrl: 'https://reqres.in/img/faces/2-image.jpg',
+        },
+      ];
+
+      fixture.detectChanges();
+
+      // Then
+      expect(template.querySelectorAll('[data-test="user-el"]').length).toEqual(
+        component.users.length
+      );
     });
   });
 });
