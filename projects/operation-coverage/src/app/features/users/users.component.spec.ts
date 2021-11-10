@@ -94,5 +94,15 @@ describe('UsersComponent', () => {
       const loadingEl = template.querySelector('[data-test="loading-el"]');
       expect(loadingEl).toBeTruthy();
     });
+
+    it('should NOT display loading element when NOT loading', () => {
+      // When
+      component.isLoading = false;
+      fixture.detectChanges();
+
+      // Then
+      const loadingEl = template.querySelector('[data-test="loading-el"]');
+      expect(loadingEl).not.toBeTruthy();
+    });
   });
 });
