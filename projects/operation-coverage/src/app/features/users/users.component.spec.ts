@@ -61,5 +61,13 @@ describe('UsersComponent', () => {
         },
       ]);
     });
+
+    it('should set isLoading to false', () => {
+      // When
+      component.ngOnInit();
+
+      // Then
+      expect(component.isLoading).toBe(false);
+    });
   });
 });
