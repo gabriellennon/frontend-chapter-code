@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { UserService } from 'src/app/core/services/business/user/user.service';
 
 import { UsersComponent } from './users.component';
@@ -68,6 +68,17 @@ describe('UsersComponent', () => {
 
       // Then
       expect(component.isLoading).toBe(false);
+    });
+
+    it('should update error when user service throws an error', () => {
+      // Given
+      mockUserService.fetchUsers.and.returnValue(throwError('fake error'));
+
+      // When
+      component.ngOnInit();
+
+      // Then
+      expect(component.error).toEqual('fake error');
     });
   });
 });
