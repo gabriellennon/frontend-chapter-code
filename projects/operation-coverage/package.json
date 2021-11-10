@@ -11,6 +11,7 @@
     "format:check": "prettier **/*.{html,ts,js,json,scss} --check",
     "format:write": "prettier **/*.{html,ts,js,json,scss} --write",
     "test:ci": "ng test --watch=false --code-coverage --browsers=ChromeHeadless",
+    "test:headless": "ng test --browsers=ChromeHeadless",
     "lint": "ng lint"
   },
   "private": true,
